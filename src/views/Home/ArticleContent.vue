@@ -1,0 +1,152 @@
+<template>
+  <div class="article-content-component" v-highlight>
+    <!-- 面包屑导航 -->
+    <div class="path-nav">
+      <el-breadcrumb separator="/">
+        <el-breadcrumb-item :to="{ path: '/' }">
+          <span @click="handleClickGoIndex">首页</span>
+        </el-breadcrumb-item>
+        <!-- 目录 -->
+        <el-breadcrumb-item v-if="activeClassify" :to="{ path: '/' }">{{activeClassify.name}}</el-breadcrumb-item>
+        <!-- 查询 -->
+        <el-breadcrumb-item v-else-if="keyword" :to="{ path: '/' }">搜索:{{keyword}}</el-breadcrumb-item>
+        <el-breadcrumb-item>{{article.title}}</el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
+    <!-- 文章内容 -->
+    <h2 class="article-title">{{article.title}}</h2>
+    <p class="article-des">
+      <span class="time">这篇文章发布于 {{$moment(article.createTime).format('YYYY年MM月DD日 HH:mm')}}，</span>
+      <span class="classify">归类于前端安全。</span>
+      <span class="traffic">阅读0次，今日0次</span>
+    </p>
+    <div class="article-content" v-html="article.content"></div>
+  </div>
+</template>
+
+<script>
+import { mapState, mapMutations, mapActions } from 'vuex'
+export default {
+  name: '',
+  props: {},
+  components: {},
+  data () {
+    return {
+      article: {}
+    }
+  },
+  computed: {
+    ...mapState({
+      activeClassify: state => state.article.activeClassify,
+      keyword: state => state.article.keyword
+    })
+  },
+  watch: {},
+  created () {},
+  mounted () {
+    this.init()
+  },
+  methods: {
+    ...mapMutations([
+      'SET_ACTIVE_CLASSIFY',
+      'SET_KEYWORD'
+    ]),
+    ...mapActions([
+      'GetArticleById'
+    ]),
+    init () {
+      // console.log('this.params', this.$route.params)
+      let { id } = this.$route.params
+      this.GetArticleById(id)
+        .then(res => {
+          let { errcode, message, article } = res
+          if (errcode === 0) {
+            this.article = JSON.parse(JSON.stringify(article))
+            return
+          }
+          this.$message({
+            type: 'warning',
+            message
+          })
+        })
+        .catch(err => {
+          console.error('获取文章内容失败!', err)
+          this.$message({
+            type: 'error',
+            message: '获取文章内容失败!'
+          })
+        })
+    },
+    handleClickGoIndex () {
+      this.SET_ACTIVE_CLASSIFY(null)
+      this.SET_KEYWORD('')
+    }
+  }
+}
+</script>
+
+<style lang="scss">
+.article-content-component {
+  padding: 20px;
+  border: 1px solid #eee;
+  background: #fff;
+  border-radius: 4px;
+  .path-nav {
+    padding: 10px;
+    background: rgba(10, 65, 155, 0.1);
+    border-radius: 4px;
+  }
+  .article-title {
+    margin-top: 10px;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  .article-des {
+    margin-top: 22px;
+    font-size: 12px;
+    color: gray;
+  }
+  .article-content {
+    margin-top: 18px;
+    ol {
+      margin-left: 40px;
+      li {
+        list-style-type: decimal;
+      }
+      li + li {
+        margin-top: 6px;
+      }
+    }
+    ul {
+      margin-left: 20px;
+      li::before {
+        display: inline-block;
+        content: '';
+        width: 8px;
+        height: 8px;
+        margin-left: 0;
+        margin-right: 5px;
+        background: gray;
+        border-radius: 50%;
+      }
+      li + li {
+        margin-top: 6px;
+      }
+    }
+  }
+  img {
+    display: block;
+    width: 400px;
+    margin-top: 5px;
+  }
+  h1 {
+    font-size: 24px;
+  }
+  h2 {
+    font-size: 22px;
+  }
+  h3 {
+    font-size: 20px;
+  }
+}
+</style>
