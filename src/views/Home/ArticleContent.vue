@@ -17,7 +17,7 @@
     <h2 class="article-title">{{article.title}}</h2>
     <p class="article-des">
       <span class="time">这篇文章发布于 {{$moment(article.createTime).format('YYYY年MM月DD日 HH:mm')}}，</span>
-      <span class="classify">归类于前端安全。</span>
+      归类于<span class="classify" @click="handleClickGoClassify">{{article.notebook ? article.notebook.name : ''}}</span>。
       <span class="traffic">阅读0次，今日0次</span>
     </p>
     <div class="article-content" v-html="article.content"></div>
@@ -52,7 +52,8 @@ export default {
       'SET_KEYWORD'
     ]),
     ...mapActions([
-      'GetArticleById'
+      'GetArticleById',
+      'GetArticleByNotebookId'
     ]),
     init () {
       // console.log('this.params', this.$route.params)
@@ -80,6 +81,35 @@ export default {
     handleClickGoIndex () {
       this.SET_ACTIVE_CLASSIFY(null)
       this.SET_KEYWORD('')
+    },
+    handleClickGoClassify () {
+      if (!this.article.notebook) return
+      this.GetArticleByNotebookId({
+        id: this.article.notebook._id,
+        params: {
+          page: 1,
+          count: 10
+        }
+      })
+        .then(res => {
+          let { errcode, message } = res
+          if (errcode === 0) {
+            this.SET_ACTIVE_CLASSIFY(this.article.notebook)
+            this.$router.push('/article')
+            return
+          }
+          this.$message({
+            type: 'warning',
+            message
+          })
+        })
+        .catch(err => {
+          console.error('获取指定分类的文章失败!', err)
+          this.$message({
+            type: 'error',
+            message: '获取指定分类的文章失败!'
+          })
+        })
     }
   }
 }
@@ -105,6 +135,13 @@ export default {
     margin-top: 22px;
     font-size: 12px;
     color: gray;
+    .classify {
+      color: #0a419b;
+      &:hover {
+        border-bottom: 1px solid #0a419b;
+        cursor: pointer;
+      }
+    }
   }
   .article-content {
     margin-top: 18px;

@@ -121,27 +121,31 @@ code {
 
 /*禁止文字选中*/
 body {
-  -o-user-select: none;
-  -moz-user-select: none; /*火狐 firefox*/
-  -webkit-user-select: none; /*webkit浏览器*/
-  -ms-user-select: none; /*IE10+*/
-  -khtml-user-select: none; /*早期的浏览器*/
-  user-select: none;
+  /* -o-user-select: none; */
+  /*火狐 firefox*/
+  /* -moz-user-select: none; */
+  /*webkit浏览器*/
+  /* -webkit-user-select: none; */
+  /*IE10+*/
+  /* -ms-user-select: none; */
+  /*早期的浏览器*/
+  /* -khtml-user-select: none; */
+  /* user-select: none; */
 }
 
 /*滚动条整体样式*/
-.scroll-bar::-webkit-scrollbar {
+::-webkit-scrollbar {
   width: 4px;
   height: 1px;
 }
 /*滚动条里面小方块*/
-.scroll-bar::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   border-radius: 10px;
   -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
   background: #bababa;
 }
 /*滚动条里面轨道*/
-.scroll-bar::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   background: #dfdfdf;

@@ -82,7 +82,8 @@ export default {
       'SET_PAGING'
     ]),
     ...mapActions([
-      'GetArticleList'
+      'GetArticleList',
+      'GetArticleByNotebookId'
     ]),
     init () {
       if (!this.activeClassify && !this.keyword) {

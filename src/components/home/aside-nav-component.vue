@@ -67,7 +67,6 @@ export default {
     // 获取分类文章
     handleClickGetArticleByNotebookId (item) {
       this.SET_ACTIVE_CLASSIFY(item)
-      this.$router.push('/')
       this.GetArticleByNotebookId({
         id: item._id,
         params: {
@@ -78,6 +77,7 @@ export default {
         .then(res => {
           let { errcode, message } = res
           if (errcode === 0) {
+            this.$router.push('/')
             return
           }
           this.$message({
