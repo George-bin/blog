@@ -1,5 +1,5 @@
 <template>
-  <div class="article-content-component" v-highlight>
+  <div class="article-content-component">
     <!-- 面包屑导航 -->
     <div class="path-nav">
       <el-breadcrumb separator="/">
@@ -18,9 +18,10 @@
     <p class="article-des">
       <span class="time">这篇文章发布于 {{$moment(article.createTime).format('YYYY年MM月DD日 HH:mm')}}，</span>
       归类于<span class="classify" @click="handleClickGoClassify">{{article.notebook ? article.notebook.name : ''}}</span>。
+      <span class="time">最后更新时间 {{$moment(article.updateTime).format('YYYY年MM月DD日 HH:mm')}} </span>
       <span class="traffic">阅读0次，今日0次</span>
     </p>
-    <div class="article-content" v-html="article.content"></div>
+    <div class="article-content" v-highlight v-html="article.content"></div>
   </div>
 </template>
 
@@ -145,6 +146,16 @@ export default {
   }
   .article-content {
     margin-top: 18px;
+    pre {
+      white-space: pre-wrap;       /* css-3 */
+      white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+      white-space: -pre-wrap;      /* Opera 4-6 */
+      white-space: -o-pre-wrap;    /* Opera 7 */
+      word-wrap: break-word;       /* Internet Explorer 5.5+ */
+      overflow: auto;
+      word-break: break-all;
+      word-wrap: break-word;
+    }
     ol {
       margin-left: 40px;
       li {
