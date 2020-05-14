@@ -31,7 +31,8 @@
         </p>
         <div class="article-list__item-intro">
           <div class="content">
-            <p>{{item.introduction ? item.introduction : '暂无简介信息!'}}</p>
+            <p v-if="item.introduction" v-html="item.introduction" style="white-space: pre-wrap;"></p>
+            <p v-else>暂无简介信息!</p>
             <button class="read-more-btn" @click="handleClickReadMore(item)">阅读全文...</button>
           </div>
           <img class="cover" :src="item.img ? item.img : require('../../assets/img/normal-cover.jpeg')" alt="cover" />

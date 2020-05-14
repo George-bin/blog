@@ -124,7 +124,7 @@ export default {
   .path-nav {
     padding: 10px;
     background: rgba(10, 65, 155, 0.1);
-    border-radius: 4px;
+    // border-radius: 4px;
   }
   .article-title {
     margin-top: 10px;
