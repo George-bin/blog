@@ -22,7 +22,7 @@
       <span class="traffic">阅读0次，今日0次</span>
     </p>
     <div class="article-cover">
-      <img v-if="article.cover" :src="article.cover" alt="cover" />
+      <img v-if="article.img" :src="article.img" alt="cover" />
       <img v-else src="../../assets/img/normal-cover.jpeg" alt="normal-cover">
     </div>
     <div class="article-content" v-highlight v-html="article.content"></div>
