@@ -174,6 +174,7 @@ export default {
       }
       .article-list__item-intro {
         display: flex;
+        align-items: flex-start;
         justify-content: space-between;
         margin-top: 20px;
         .content {
@@ -200,6 +201,38 @@ export default {
   }
   .footer-pagination {
     margin-top: 20px;
+  }
+}
+@media screen and (max-width: 650px) {
+  .article-list-component {
+    padding: 10px;
+    .article-list__header {
+      h2 {
+        padding-bottom: 10px;
+        font-size: 24px;
+      }
+    }
+    .article-list {
+      .article-list__item {
+        .article-list__item-title {
+          font-size: 18px;
+        }
+        .article-list__item-des {
+          font-size: 10px;
+        }
+        .article-list__item-intro {
+          .content {
+            font-size: 14px;
+            .read-more-btn {
+              font-size: 14px;
+            }
+          }
+          .cover {
+            width: 100px;
+          }
+        }
+      }
+    }
   }
 }
 </style>

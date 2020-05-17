@@ -1,12 +1,12 @@
 <template>
   <div id="app">
+    <!-- 返回顶部 -->
+    <el-backtop></el-backtop>
     <main-header></main-header>
     <div class="main-container">
       <router-view/>
     </div>
     <main-footer></main-footer>
-    <!-- 返回顶部 -->
-    <el-backtop></el-backtop>
   </div>
 </template>
 
@@ -18,6 +18,7 @@ export default {
     MainFooter: () => import('@/components/home/main-footer-component.vue')
   },
   created () {
+    console.log(process.env.BASE_API)
     // 在页面加载时读取sessionStorage里的状态信息
     if (sessionStorage.getItem('store')) {
       console.log('获取store', JSON.parse(sessionStorage.getItem('store')))
@@ -32,7 +33,8 @@ export default {
       // sessionStorage.setItem('auth', this.auth)
       sessionStorage.setItem('store', JSON.stringify(this.$store.state))
     })
-  }
+  },
+  methods: {}
 }
 </script>
 
@@ -45,7 +47,14 @@ body, html {
 }
 #app {
   .main-container {
-    min-height: calc(100vh - 149px);
+    min-height: calc(100vh - 129px);
+  }
+}
+@media screen and (max-width: 650px) {
+  #app {
+    .main-container {
+      min-height: calc(100vh - 119px);
+    }
   }
 }
 </style>

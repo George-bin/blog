@@ -1,7 +1,13 @@
 <template>
-  <div class="aside-nav-component">
+  <div
+    :class="{
+      'show-mobile-aside-nav': mobileAsideNav
+    }"
+    class="aside-nav-component"
+    @click="handleClickCloseMobileAsideNav">
     <!-- 文章分类 -->
-    <div class="article-classify">
+    <div
+      class="article-classify">
       <h3 class="article-classify__title">文章分类</h3>
       <ul class="article-classify-list">
         <li
@@ -17,7 +23,7 @@
 </template>
 
 <script>
-import { mapMutations, mapActions } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 export default {
   name: '',
   props: {},
@@ -29,6 +35,9 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      mobileAsideNav: state => state.home.mobileAsideNav
+    })
   },
   watch: {},
   created () {},
@@ -37,7 +46,8 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'SET_ACTIVE_CLASSIFY'
+      'SET_ACTIVE_CLASSIFY',
+      'SET_MOBILE_ASIDE_NAV'
     ]),
     ...mapActions([
       'GetClassifyList',
@@ -92,6 +102,12 @@ export default {
             message: '获取指定分类的文章失败!'
           })
         })
+    },
+    // mobile => 关闭侧边栏
+    handleClickCloseMobileAsideNav () {
+      if (this.mobileAsideNav) {
+        this.SET_MOBILE_ASIDE_NAV(false)
+      }
     }
   }
 }
@@ -99,9 +115,9 @@ export default {
 
 <style lang="scss">
 .aside-nav-component {
-  width: 220px;
   margin-left: 10px;
   .article-classify {
+    width: 220px;
     padding: 20px;
     border: 1px solid #eee;
     font-size: 14px;
@@ -129,6 +145,29 @@ export default {
         margin-top: 5px;
       }
     }
+  }
+}
+@media screen and (max-width: 650px) {
+  .aside-nav-component {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin-left: 0;
+    transform: translateX(-100%);
+    transition: all 0.5s;
+    z-index: 9998;
+    .article-classify  {
+      height: 100vh;
+      padding-top: 70px;
+      border: none;
+      border-radius: 0;
+      background: #f9f9f9;
+      box-shadow: 0 5px 10px #dfdfdf;
+    }
+  }
+  .show-mobile-aside-nav {
+    transform: translateX(0);
   }
 }
 </style>

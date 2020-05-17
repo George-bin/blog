@@ -42,4 +42,9 @@ export default {
     }
   }
 }
+@media screen and (max-width: 650px) {
+  .home-component {
+    margin-top: 60px;
+  }
+}
 </style>

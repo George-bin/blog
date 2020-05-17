@@ -10,7 +10,7 @@
         <el-breadcrumb-item v-if="activeClassify" :to="{ path: '/' }">{{activeClassify.name}}</el-breadcrumb-item>
         <!-- 查询 -->
         <el-breadcrumb-item v-else-if="keyword" :to="{ path: '/' }">搜索:{{keyword}}</el-breadcrumb-item>
-        <el-breadcrumb-item>{{article.title}}</el-breadcrumb-item>
+        <el-breadcrumb-item>当前文章</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <!-- 文章内容 -->
@@ -21,6 +21,10 @@
       <span class="time">最后更新时间 {{$moment(article.updateTime).format('YYYY年MM月DD日 HH:mm')}} </span>
       <span class="traffic">阅读0次，今日0次</span>
     </p>
+    <div class="article-cover">
+      <img v-if="article.cover" :src="article.cover" alt="cover" />
+      <img v-else src="../../assets/img/normal-cover.jpeg" alt="normal-cover">
+    </div>
     <div class="article-content" v-highlight v-html="article.content"></div>
   </div>
 </template>
@@ -63,7 +67,13 @@ export default {
         .then(res => {
           let { errcode, message, article } = res
           if (errcode === 0) {
+            let host = ''
+            if (process.env.NODE_ENV === 'development') {
+              let lastIndex = process.env.BASE_API.lastIndexOf(':')
+              host = process.env.BASE_API.substring(0, lastIndex)
+            }
             this.article = JSON.parse(JSON.stringify(article))
+            this.article.content = article.content.replace(/src="\/file\/uploads\/images\/blog/g, `src="${host}/file/uploads/images/blog`)
             return
           }
           this.$message({
@@ -118,7 +128,7 @@ export default {
 
 <style lang="scss">
 .article-content-component {
-  padding: 20px;
+  padding: 20px 30px;
   border: 1px solid #eee;
   background: #fff;
   border-radius: 4px;
@@ -131,6 +141,12 @@ export default {
     margin-top: 10px;
     font-size: 28px;
     font-weight: bold;
+  }
+  .article-cover {
+    img {
+      display: block;
+      width: 100%;
+    }
   }
   .article-des {
     margin-top: 22px;
@@ -195,6 +211,21 @@ export default {
   }
   h3 {
     font-size: 20px;
+  }
+}
+@media screen and (max-width: 500px) {
+  .article-content-component {
+    padding: 20px 10px;
+    font-size: 14px;
+    .article-title {
+      font-size: 22px;
+    }
+    h3 {
+      font-size: 18px;
+    }
+    img {
+      width: 100%;
+    }
   }
 }
 </style>

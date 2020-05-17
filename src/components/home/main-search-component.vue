@@ -7,6 +7,7 @@
       placeholder="请输入文章关键字!"
       @keyup.enter.native="handleSearchArticle">
     </el-input>
+    <!-- <span class="mobile-search-icon"><i class="el-icon-search"></i></span> -->
   </div>
 </template>
 
@@ -69,6 +70,22 @@ export default {
 .main-search-component {
   .el-input__inner {
     border-radius: 30px;
+  }
+  .mobile-search-icon {
+    display: none;
+    i {
+      font-size: 22px;
+    }
+  }
+}
+@media screen and (max-width: 650px) {
+  .main-search-component {
+    .el-input {
+      display: none;
+    }
+    .mobile-search-icon {
+      display: inline-block;
+    }
   }
 }
 </style>

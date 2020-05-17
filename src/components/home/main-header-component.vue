@@ -3,72 +3,53 @@
     <div class="main-header-box min-width">
       <div class="logo" @click="handleGoIndex">
         <img src="../../../static/img/logo.png" alt="logo" />
-        <h1>George<span>专注前端开发</span></h1>
+        <h1><span class="name">George</span><span class="label">专注前端开发</span></h1>
       </div>
-      <!-- 搜索区域 -->
-      <main-search></main-search>
-      <!-- 主导航 -->
-      <nav class="main-nav">
-        <ul class="main-nav-list">
-          <li
-            v-for="(item, index) in navList"
-            :key="index"
-            :class="{
-              'active-route': item.path === activeRoute
-            }"
-            class="main-nav-list__item"
-            @click="handleClickSwitchRouter(item)">
-            {{item.title}}
-          </li>
-        </ul>
-      </nav>
+      <!-- 移动端搜索icon -->
+      <span @click="handleClickOpenMobileAsideNav" class="mobile-aside-nav-icon">
+        <i v-if="mobileAsideNav" class="el-icon-s-fold"></i>
+        <i v-else class="el-icon-s-unfold"></i>
+      </span>
+      <div class="right-box">
+        <!-- 主导航 -->
+        <main-nav></main-nav>
+        <!-- 搜索区域 -->
+        <main-search></main-search>
+      </div>
     </div>
   </header>
 </template>
 
 <script>
-import { mapMutations, mapActions } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 export default {
   name: '',
   props: {},
   components: {
-    MainSearch: () => import('@/components/home/main-search-component.vue')
+    MainSearch: () => import('@/components/home/main-search-component.vue'),
+    MainNav: () => import('@/components/home/main-nav-component.vue')
   },
   data () {
     return {
-      activeRoute: '',
-      navList: [
-        {
-          title: '归档',
-          path: '/'
-        },
-        {
-          title: '生活',
-          path: '/life'
-        },
-        {
-          title: '关于',
-          path: '/about'
-        }
-      ]
     }
   },
-  computed: {},
+  computed: {
+    ...mapState({
+      mobileAsideNav: state => state.home.mobileAsideNav
+    })
+  },
   watch: {},
   created () {},
   mounted () {},
   methods: {
     ...mapMutations([
       'SET_ACTIVE_CLASSIFY',
-      'SET_KEYWORD'
+      'SET_KEYWORD',
+      'SET_MOBILE_ASIDE_NAV'
     ]),
     ...mapActions([
       'GetArticleList'
     ]),
-    handleClickSwitchRouter (item) {
-      // this.activeRoute = item.path
-      // this.$router.push(item.path)
-    },
     handleGoIndex () {
       this.SET_ACTIVE_CLASSIFY(null)
       this.SET_KEYWORD('')
@@ -77,6 +58,9 @@ export default {
         count: 10
       })
       this.$router.push('/')
+    },
+    handleClickOpenMobileAsideNav () {
+      this.SET_MOBILE_ASIDE_NAV(!this.mobileAsideNav)
     }
   }
 }
@@ -88,14 +72,14 @@ export default {
   top: 0;
   left: 0;
   width: 100%;
-  border-bottom: 1px solid #eee;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.25);
   background: #fff;
+  z-index: 9999;
   .main-header-box {
     height: 59px;
     display: flex;
     align-items: center;
     .logo {
-      flex: 1;
       display: flex;
       align-items: flex-end;
       // align-items: center;
@@ -106,31 +90,32 @@ export default {
       }
       h1 {
         margin-left: 5px;
-        font-size: 24px;
         font-weight: normal;
-        color: #ed1925;
-        span {
+        .name {
+          font-size: 24px;
+          color: #ed1925;
+        }
+        .label {
           margin-left: 2px;
           font-size: 14px;
           color: #333;
         }
       }
     }
-  }
-  .main-nav {
-    .main-nav-list {
+    .right-box {
+      flex: 1;
       display: flex;
-      .main-nav-list__item {
-        height: 58px;
-        line-height: 58px;
-        margin-left: 20px;
-        font-size: 14px;
-        // font-weight: bold;
-        cursor: pointer;
-      }
-      .active-route {
-        border-bottom: 2px solid #0a419b;
-        color: #0a419b;
+      align-items: center;
+      flex-direction: row-reverse;
+    }
+    .mobile-aside-nav-icon {
+      position: absolute;
+      top: 12px;
+      left: 10px;
+      display: none;
+      i {
+        font-size: 24px;
+        color: gray;
       }
     }
   }
@@ -139,6 +124,32 @@ export default {
   .main-header-component {
     .main-header-box {
       margin: 0 10px;
+    }
+  }
+}
+@media screen and (max-width: 650px) {
+  .main-header-component {
+    .main-header-box {
+      display: block;
+      height: 50px;
+      text-align: center;
+      .logo {
+        display: inline-block;
+        margin-top: 6px;
+        img {
+          width: 35px;
+          height: 35px;
+        }
+        h1 {
+          display: none;
+        }
+      }
+      .main-nav {
+        display: none;
+      }
+      .mobile-aside-nav-icon {
+        display: block;
+      }
     }
   }
 }
