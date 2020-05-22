@@ -27,7 +27,6 @@ td {
   padding: 0;
 }
 body {
-  color: #555;
   font-size: 16px;
   font-family: Verdana, Arial, Helvetica, sans-serif;
 }
@@ -47,7 +46,7 @@ h6 {
 }
 /*address, caption, cite, code, dfn, em, strong, th, var { font-style:normal; font-weight:normal;}*/
 a {
-  color: #555;
+  /* color: #555; */
   text-decoration: none;
 }
 a:hover {
