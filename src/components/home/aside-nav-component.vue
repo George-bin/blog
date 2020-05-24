@@ -87,6 +87,7 @@ export default {
         .then(res => {
           let { errcode, message } = res
           if (errcode === 0) {
+            this.$backtopAni()
             this.$router.push('/')
             return
           }

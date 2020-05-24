@@ -57,19 +57,21 @@ export default {
 
 <style lang="scss">
 .main-nav-component {
-  .main-nav-list {
-    display: flex;
-    .main-nav-list__item {
-      height: 58px;
-      line-height: 58px;
-      margin-left: 20px;
-      font-size: 14px;
-      // font-weight: bold;
-      cursor: pointer;
-    }
-    .active-route {
-      border-bottom: 2px solid #0a419b;
-      color: #0a419b;
+  .main-nav {
+    .main-nav-list {
+      display: flex;
+      .main-nav-list__item {
+        height: 58px;
+        line-height: 58px;
+        margin-left: 20px;
+        font-size: 14px;
+        // font-weight: bold;
+        cursor: pointer;
+      }
+      .active-route {
+        border-bottom: 2px solid #0a419b;
+        color: #0a419b;
+      }
     }
   }
 }

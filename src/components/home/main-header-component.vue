@@ -1,18 +1,19 @@
 <template>
-  <header class="main-header-component">
+  <header
+    class="main-header-component"
+    @click="handleClickCloseMobileAsideNav">
     <div class="main-header-box min-width">
       <div class="logo" @click="handleGoIndex">
         <img src="../../../static/img/logo.png" alt="logo" />
         <h1><span class="name">George</span><span class="label">专注前端开发</span></h1>
       </div>
-      <!-- 移动端搜索icon -->
-      <span @click="handleClickOpenMobileAsideNav" class="mobile-aside-nav-icon">
-        <i v-if="mobileAsideNav" class="el-icon-s-fold"></i>
-        <i v-else class="el-icon-s-unfold"></i>
+      <!-- 移动端菜单icon -->
+      <span @click.stop="handleClickOpenMobileAsideNav" class="mobile-aside-nav-icon">
+        <i class="iconfont icon-caidan"></i>
       </span>
       <div class="right-box">
         <!-- 主导航 -->
-        <main-nav></main-nav>
+        <!-- <main-nav></main-nav> -->
         <!-- 搜索区域 -->
         <main-search></main-search>
       </div>
@@ -57,10 +58,14 @@ export default {
         page: 1,
         count: 10
       })
+      this.$backtopAni()
       this.$router.push('/')
     },
     handleClickOpenMobileAsideNav () {
       this.SET_MOBILE_ASIDE_NAV(!this.mobileAsideNav)
+    },
+    handleClickCloseMobileAsideNav () {
+      this.SET_MOBILE_ASIDE_NAV(false)
     }
   }
 }
@@ -110,11 +115,15 @@ export default {
     }
     .mobile-aside-nav-icon {
       position: absolute;
-      top: 12px;
+      top: 8px;
       left: 10px;
       display: none;
+      width: 40px;
+      border: 1px solid #efefef;
+      border-radius: 4px;
       i {
-        font-size: 24px;
+        display: block;
+        font-size: 28px;
         color: gray;
       }
     }

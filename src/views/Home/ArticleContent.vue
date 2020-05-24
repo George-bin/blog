@@ -106,6 +106,7 @@ export default {
           let { errcode, message } = res
           if (errcode === 0) {
             this.SET_ACTIVE_CLASSIFY(this.article.notebook)
+            this.$backtopAni()
             this.$router.push('/article')
             return
           }

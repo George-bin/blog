@@ -1,0 +1,16 @@
+{
+  "id": "1837105",
+  "name": "blog",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "7450591",
+      "name": "菜单",
+      "font_class": "caidan",
+      "unicode": "e65c",
+      "unicode_decimal": 58972
+    }
+  ]
+}

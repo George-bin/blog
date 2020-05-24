@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- 返回顶部 -->
-    <el-backtop></el-backtop>
+    <back-top></back-top>
     <main-header></main-header>
     <div class="main-container">
       <router-view/>
@@ -14,6 +14,7 @@
 export default {
   name: 'App',
   components: {
+    BackTop: () => import('@/components/common/back-top-component.vue'),
     MainHeader: () => import('@/components/home/main-header-component.vue'),
     MainFooter: () => import('@/components/home/main-footer-component.vue')
   },

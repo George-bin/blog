@@ -99,6 +99,7 @@ export default {
         .then(res => {
           let { errcode, message } = res
           if (errcode === 0) {
+            this.$backtopAni()
             return
           }
           this.$message({
@@ -125,6 +126,7 @@ export default {
     },
     // 阅读全文
     handleClickReadMore (item) {
+      this.$backtop()
       this.$router.push(`/article/${item._id}`)
     }
   }
