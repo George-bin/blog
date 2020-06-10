@@ -140,7 +140,7 @@ export default {
   .main-header-component {
     .main-header-box {
       display: block;
-      height: 50px;
+      height: 49px;
       text-align: center;
       .logo {
         display: inline-block;

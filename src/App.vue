@@ -48,13 +48,13 @@ body, html {
 }
 #app {
   .main-container {
-    min-height: calc(100vh - 129px);
+    min-height: calc(100vh - 141px);
   }
 }
 @media screen and (max-width: 650px) {
   #app {
     .main-container {
-      min-height: calc(100vh - 119px);
+      min-height: calc(100vh - 131px);
     }
   }
 }

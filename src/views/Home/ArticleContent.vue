@@ -25,7 +25,8 @@
       <img v-if="article.img" :src="article.img" alt="cover" />
       <img v-else src="../../assets/img/normal-cover.jpeg" alt="normal-cover">
     </div>
-    <div class="article-content" v-highlight v-html="article.content"></div>
+    <!-- v-highlight -->
+    <div class="article-content" v-html="article.content"></div>
   </div>
 </template>
 
@@ -163,16 +164,9 @@ export default {
   }
   .article-content {
     margin-top: 18px;
-    pre {
-      white-space: pre-wrap;       /* css-3 */
-      white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
-      white-space: -pre-wrap;      /* Opera 4-6 */
-      white-space: -o-pre-wrap;    /* Opera 7 */
-      word-wrap: break-word;       /* Internet Explorer 5.5+ */
-      overflow: auto;
-      word-break: break-all;
-      word-wrap: break-word;
-    }
+    // code {
+    //   width: 400px;
+    // }
     ol {
       margin-left: 40px;
       li {
@@ -214,7 +208,20 @@ export default {
     font-size: 20px;
   }
 }
-@media screen and (max-width: 500px) {
+@media screen and (min-width: 1200px) {
+  code {
+    width: calc(1180px - 270px - 60px - 22px);
+  }
+}
+@media screen and (max-width: 1200px) {
+  code {
+    width: calc(100vw - 270px - 60px - 22px - 40px);
+  }
+}
+@media screen and (max-width: 650px) {
+  code {
+    width: calc(100vw - 64px);
+  }
   .article-content-component {
     padding: 20px 10px;
     font-size: 14px;

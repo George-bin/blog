@@ -118,7 +118,7 @@ export default {
 .aside-nav-component {
   margin-left: 10px;
   .article-classify {
-    width: 220px;
+    width: 218px;
     padding: 20px;
     border: 1px solid #eee;
     font-size: 14px;

@@ -91,31 +91,26 @@ html {
   white-space: nowrap;
 }
 
-pre {
-  /* max-height: 300px; */
-  padding: 10px;
-  font-size: 14px;
-  background: #e9ecef;
-  /* border-radius: 5px; */
-  /* overflow: auto !important; */
-}
-
-.ql-snow .ql-editor pre.ql-syntax {
-  color: #333333;
-  background: #f7f7f7;
-  /* border: 1px solid #d2d2d2; */
-  border-radius: 0;
-}
-
-.ql-snow .ql-editor blockquote {
-  height: 30px;
-  line-height: 30px;
-  background: #f7f7f7;
-}
 
 pre,
 code {
   font-family: Consolas;
+}
+code {
+  display: block;
+  max-height: 400px;
+  padding: 10px;
+  border: 1px solid #dfdfdf;
+  font-size: 14px;
+  overflow: auto;
+  /* white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+  word-break: break-all;
+  word-wrap: break-word; */
+  background: #f8f8f8;
 }
 
 /*禁止文字选中*/
@@ -133,22 +128,22 @@ body {
 }
 
 /*滚动条整体样式*/
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   width: 4px;
   height: 1px;
-}
+} */
 /*滚动条里面小方块*/
-::-webkit-scrollbar-thumb {
+/* ::-webkit-scrollbar-thumb {
   border-radius: 10px;
   -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
   background: #bababa;
-}
+} */
 /*滚动条里面轨道*/
-::-webkit-scrollbar-track {
+/* ::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   background: #dfdfdf;
-}
+} */
 
 /* 最小宽度 */
 .min-width {
@@ -169,39 +164,4 @@ blockquote {
   border-left: 4px solid gray;
   margin-bottom: 8px;
   background: #f7f7f7;
-}
-
-/* 字体大小设置 */
-.ql-size-10px {
-  font-size: 10px;
-}
-.ql-size-12px {
-  font-size: 12px;
-}
-.ql-size-14px {
-  font-size: 14px;
-}
-.ql-size-16px {
-  font-size: 16px;
-}
-.ql-size-18px {
-  font-size: 18px;
-}
-.ql-size-20px {
-  font-size: 20px;
-}
-.ql-size-22px {
-  font-size: 22px;
-}
-.ql-size-24px {
-  font-size: 24px;
-}
-.ql-size-26px {
-  font-size: 26px;
-}
-.ql-size-32px {
-  font-size: 32px;
-}
-.ql-size-48px {
-  font-size: 48px;
 }

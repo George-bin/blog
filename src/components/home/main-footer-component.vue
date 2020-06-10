@@ -27,7 +27,7 @@ export default {
 .main-footer-component {
   background: rgba(183, 203, 232, 0.3);
   .main-footer-box {
-    padding: 10px 0;
+    padding: 20px 0;
     font-size: 10px;
     text-align: center;
     color: #0a419b;
