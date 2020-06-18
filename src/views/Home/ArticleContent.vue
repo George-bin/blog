@@ -140,10 +140,10 @@ export default {
     // border-radius: 4px;
   }
   .article-title {
-    margin-top: 10px;
+    margin-top: 20px;
     font-size: 20px;
     font-weight: bold;
-    color: #0a419b;
+    // color: #0a419b;
   }
   .article-cover {
     img {
@@ -152,7 +152,7 @@ export default {
     }
   }
   .article-des {
-    margin-top: 22px;
+    margin-top: 10px;
     font-size: 12px;
     color: gray;
     .classify {
