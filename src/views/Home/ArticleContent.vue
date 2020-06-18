@@ -141,8 +141,9 @@ export default {
   }
   .article-title {
     margin-top: 10px;
-    font-size: 28px;
+    font-size: 20px;
     font-weight: bold;
+    color: #0a419b;
   }
   .article-cover {
     img {
@@ -164,12 +165,15 @@ export default {
   }
   .article-content {
     margin-top: 18px;
-    // code {
-    //   width: 400px;
-    // }
+    p {
+      margin-top: 8px;
+      line-height: 1.5;
+    }
     ol {
-      margin-left: 40px;
+      margin-top: 10px;
+      margin-left: 20px;
       li {
+        line-height: 1.5;
         list-style-type: decimal;
       }
       li + li {
@@ -177,7 +181,8 @@ export default {
       }
     }
     ul {
-      margin-left: 20px;
+      margin-top: 10px;
+      margin-left: 3px;
       li::before {
         display: inline-block;
         content: '';
