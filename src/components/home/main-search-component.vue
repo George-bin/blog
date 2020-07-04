@@ -7,7 +7,6 @@
       placeholder="请输入文章关键字!"
       @keyup.enter.native="handleSearchArticle">
     </el-input>
-    <!-- <span class="mobile-search-icon"><i class="el-icon-search"></i></span> -->
   </div>
 </template>
 
@@ -35,7 +34,7 @@ export default {
       'GetArticleByKeyword'
     ]),
     handleSearchArticle () {
-      if (!this.keyword) return
+      // if (!this.keyword) return
       this.$router.push('/')
       this.SET_ACTIVE_CLASSIFY(null)
       this.SET_KEYWORD(this.keyword)

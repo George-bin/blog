@@ -9,7 +9,7 @@
       </div>
       <!-- 移动端菜单icon -->
       <span @click.stop="handleClickOpenMobileAsideNav" class="mobile-aside-nav-icon">
-        <i class="iconfont icon-caidan"></i>
+        <i class="iconfont icon-caidan2"></i>
       </span>
       <div class="right-box">
         <!-- 主导航 -->
@@ -36,7 +36,8 @@ export default {
   },
   computed: {
     ...mapState({
-      mobileAsideNav: state => state.home.mobileAsideNav
+      mobileAsideNav: state => state.home.mobileAsideNav,
+      openBgFlag: state => state.home.openBgFlag
     })
   },
   watch: {},
@@ -46,7 +47,8 @@ export default {
     ...mapMutations([
       'SET_ACTIVE_CLASSIFY',
       'SET_KEYWORD',
-      'SET_MOBILE_ASIDE_NAV'
+      'SET_MOBILE_ASIDE_NAV',
+      'SET_OPEN_BG_FLAG'
     ]),
     ...mapActions([
       'GetArticleList'
@@ -62,6 +64,7 @@ export default {
       this.$router.push('/')
     },
     handleClickOpenMobileAsideNav () {
+      this.SET_OPEN_BG_FLAG(!this.openBgFlag)
       this.SET_MOBILE_ASIDE_NAV(!this.mobileAsideNav)
     },
     handleClickCloseMobileAsideNav () {
@@ -81,7 +84,7 @@ export default {
   background: #fff;
   z-index: 999;
   .main-header-box {
-    height: 59px;
+    height: 60px;
     display: flex;
     align-items: center;
     .logo {
@@ -115,15 +118,12 @@ export default {
     }
     .mobile-aside-nav-icon {
       position: absolute;
-      top: 8px;
+      top: 15px;
       left: 10px;
       display: none;
-      width: 40px;
-      border: 1px solid #efefef;
-      border-radius: 4px;
       i {
         display: block;
-        font-size: 28px;
+        font-size: 20px;
         color: gray;
       }
     }
@@ -140,7 +140,7 @@ export default {
   .main-header-component {
     .main-header-box {
       display: block;
-      height: 49px;
+      height: 50px;
       text-align: center;
       .logo {
         display: inline-block;

@@ -10,9 +10,7 @@
     <!-- 分页组件 -->
     <el-pagination
       background
-      layout="prev, pager, next"
-      prev-text="上一页"
-      next-text="下一页"
+      layout="total, prev, pager, next"
       :current-page="paging.page"
       :total="paging.totals"
       :page-size="paging.size"
@@ -41,12 +39,9 @@
     </div>
     <!-- 分页组件 -->
     <el-pagination
-      v-if="articleList.length > 5"
       class="footer-pagination"
       background
-      layout="prev, pager, next"
-      prev-text="上一页"
-      next-text="下一页"
+      layout="total, prev, pager, next"
       :current-page="paging.page"
       :total="paging.totals"
       :page-size="paging.size"
@@ -152,7 +147,6 @@ export default {
     margin-left: -5px;
   }
   .article-list {
-    margin-top: 26px;
     .article-list__item {
       margin-top: 40px;
       border-bottom: 1px solid #eee;
@@ -204,6 +198,9 @@ export default {
   .footer-pagination {
     margin-top: 20px;
   }
+  .el-pagination {
+    padding-left: 6px;
+  }
 }
 @media screen and (max-width: 650px) {
   .article-list-component {
@@ -211,22 +208,23 @@ export default {
     .article-list__header {
       h2 {
         padding-bottom: 10px;
-        font-size: 24px;
+        font-size: 20px;
       }
     }
     .article-list {
       .article-list__item {
+        margin-top: 20px;
         .article-list__item-title {
-          font-size: 18px;
+          font-size: 16px;
         }
         .article-list__item-des {
           font-size: 10px;
         }
         .article-list__item-intro {
           .content {
-            font-size: 14px;
+            font-size: 13px;
             .read-more-btn {
-              font-size: 14px;
+              font-size: 13px;
             }
           }
           .cover {

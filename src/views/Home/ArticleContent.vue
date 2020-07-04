@@ -136,8 +136,8 @@ export default {
   border-radius: 4px;
   .path-nav {
     padding: 10px;
-    background: rgba(10, 65, 155, 0.1);
-    // border-radius: 4px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
   }
   .article-title {
     margin-top: 20px;
@@ -165,6 +165,7 @@ export default {
   }
   .article-content {
     margin-top: 18px;
+    word-break:break-all; // 英语换行问题
     p {
       margin-top: 8px;
       line-height: 1.5;
@@ -214,30 +215,54 @@ export default {
   }
 }
 @media screen and (min-width: 1200px) {
-  code {
-    width: calc(1180px - 270px - 60px - 22px);
+  .article-content-component {
+    code {
+      width: calc(1180px - 270px - 60px - 22px);
+    }
+    h1, h2, h3, h4, h5, p {
+      width: calc(1180px - 270px - 60px);
+    }
+    li {
+      width: calc(1180px - 270px - 80px);
+    }
   }
 }
 @media screen and (max-width: 1200px) {
-  code {
-    width: calc(100vw - 270px - 60px - 22px - 40px);
+  .article-content-component {
+    code {
+      width: calc(100vw - 270px - 60px - 22px - 40px);
+    }
+    h1, h2, h3, h4, h5, p {
+      width: calc(100vw - 270px - 60px - 40px);
+    }
+    li {
+      width: calc(100vw - 270px - 60px - 60px);
+    }
   }
 }
 @media screen and (max-width: 650px) {
-  code {
-    width: calc(100vw - 64px);
-  }
   .article-content-component {
-    padding: 20px 10px;
+    padding: 10px;
     font-size: 14px;
     .article-title {
-      font-size: 22px;
+      font-size: 16px;
     }
     h3 {
       font-size: 18px;
     }
     img {
       width: 100%;
+    }
+    code {
+      width: calc(100vw - 64px);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    h1, h2, h3, h4, h5, p {
+      width: calc(100vw - 42px);
+    }
+    li {
+      width: calc(100vw - 62px);
     }
   }
 }

@@ -47,7 +47,8 @@ export default {
   methods: {
     ...mapMutations([
       'SET_ACTIVE_CLASSIFY',
-      'SET_MOBILE_ASIDE_NAV'
+      'SET_MOBILE_ASIDE_NAV',
+      'SET_OPEN_BG_FLAG'
     ]),
     ...mapActions([
       'GetClassifyList',
@@ -108,6 +109,7 @@ export default {
     handleClickCloseMobileAsideNav () {
       if (this.mobileAsideNav) {
         this.SET_MOBILE_ASIDE_NAV(false)
+        this.SET_OPEN_BG_FLAG(false)
       }
     }
   }
@@ -117,6 +119,11 @@ export default {
 <style lang="scss">
 .aside-nav-component {
   margin-left: 10px;
+  .aside-nav-component-bg {
+    width: 100%;
+    height: 100%;
+    transition: all 0.3s;
+  }
   .article-classify {
     width: 218px;
     padding: 20px;
@@ -160,7 +167,7 @@ export default {
     z-index: 9998;
     .article-classify  {
       height: 100vh;
-      padding-top: 70px;
+      // padding-top: 70px;
       border: none;
       border-radius: 0;
       background: #f9f9f9;

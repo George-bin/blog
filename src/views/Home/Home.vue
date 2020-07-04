@@ -33,18 +33,11 @@ export default {
 
 <style lang="scss">
 .home-component {
-  margin-top: 10px;
-  margin-bottom: 20px;
   .home-box {
     display: flex;
     .home-container {
       flex: 1;
     }
-  }
-}
-@media screen and (max-width: 650px) {
-  .home-component {
-    margin-top: 60px;
   }
 }
 </style>

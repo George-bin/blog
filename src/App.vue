@@ -1,13 +1,14 @@
 <template>
   <div id="app">
     <!-- 返回顶部 -->
-    <back-top></back-top>
+    <back-top ref="hi"></back-top>
     <main-header></main-header>
     <div class="main-aphorism min-width">君子藏器于身，待时而动!</div>
     <div class="main-container">
       <router-view/>
     </div>
     <main-footer></main-footer>
+    <m-bg ref="mBg" @hook:mounted="$_handleMBgMounted"></m-bg>
   </div>
 </template>
 
@@ -17,7 +18,8 @@ export default {
   components: {
     BackTop: () => import('@/components/common/back-top-component.vue'),
     MainHeader: () => import('@/components/home/main-header-component.vue'),
-    MainFooter: () => import('@/components/home/main-footer-component.vue')
+    MainFooter: () => import('@/components/home/main-footer-component.vue'),
+    MBg: () => import('@/components/common/m-bg-component')
   },
   created () {
     // console.log(process.env.BASE_API)
@@ -37,7 +39,13 @@ export default {
     })
   },
   mounted () {},
-  methods: {}
+  methods: {
+    /**
+     * MBg组件加载完成
+     */
+    $_handleMBgMounted () {
+    }
+  }
 }
 </script>
 
@@ -52,21 +60,26 @@ body, html {
   .main-aphorism {
     height: 36px;
     line-height: 36px;
-    border: 1px solid rgba(10, 65, 155, 0.2);
+    border: 1px solid rgba(10, 65, 155, 0.15);
     margin-top: 70px;
     text-align: center;
     color: rgba(10, 65, 155, 1);
-    background: rgba(10, 65, 155, 0.15);
+    background: rgba(10, 65, 155, 0.1);
     border-radius: 4px;
   }
   .main-container {
-    min-height: calc(100vh - 141px);
+    min-height: calc(100vh - 209px);
+    margin-top: 10px;
   }
 }
 @media screen and (max-width: 650px) {
   #app {
+    .main-aphorism {
+      display: none;
+    }
     .main-container {
-      min-height: calc(100vh - 131px);
+      margin-top: 60px;
+      min-height: calc(100vh - 151px);
     }
   }
 }

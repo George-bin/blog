@@ -25,6 +25,7 @@ export default {
 
 <style lang="scss">
 .main-footer-component {
+  margin-top: 20px;
   background: rgba(183, 203, 232, 0.3);
   .main-footer-box {
     padding: 20px 0;
