@@ -3,6 +3,7 @@
     <!-- 返回顶部 -->
     <back-top></back-top>
     <main-header></main-header>
+    <div class="main-aphorism min-width">君子藏器于身，待时而动!</div>
     <div class="main-container">
       <router-view/>
     </div>
@@ -19,7 +20,7 @@ export default {
     MainFooter: () => import('@/components/home/main-footer-component.vue')
   },
   created () {
-    console.log(process.env.BASE_API)
+    // console.log(process.env.BASE_API)
     // 在页面加载时读取sessionStorage里的状态信息
     if (sessionStorage.getItem('store')) {
       console.log('获取store', JSON.parse(sessionStorage.getItem('store')))
@@ -35,6 +36,7 @@ export default {
       sessionStorage.setItem('store', JSON.stringify(this.$store.state))
     })
   },
+  mounted () {},
   methods: {}
 }
 </script>
@@ -47,6 +49,16 @@ body, html {
   background: #f7f7f7;
 }
 #app {
+  .main-aphorism {
+    height: 36px;
+    line-height: 36px;
+    border: 1px solid rgba(10, 65, 155, 0.2);
+    margin-top: 70px;
+    text-align: center;
+    color: rgba(10, 65, 155, 1);
+    background: rgba(10, 65, 155, 0.15);
+    border-radius: 4px;
+  }
   .main-container {
     min-height: calc(100vh - 141px);
   }

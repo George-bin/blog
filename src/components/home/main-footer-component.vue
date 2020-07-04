@@ -1,8 +1,8 @@
 <template>
   <footer class="main-footer-component">
     <div class="main-footer-box min-width">
-      <p class="copyright">Copyright© 2019-2020 George的博客</p>
-      <p class="record">京ICP备19037191</p>
+      <p class="copyright">Copyright© 2019-2020 George技术分享</p>
+      <p class="record">京ICP备19037191号-2</p>
     </div>
   </footer>
 </template>

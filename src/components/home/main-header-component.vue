@@ -77,9 +77,9 @@ export default {
   top: 0;
   left: 0;
   width: 100%;
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
   background: #fff;
-  z-index: 9999;
+  z-index: 999;
   .main-header-box {
     height: 59px;
     display: flex;

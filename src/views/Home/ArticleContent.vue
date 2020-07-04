@@ -68,13 +68,13 @@ export default {
         .then(res => {
           let { errcode, message, article } = res
           if (errcode === 0) {
-            let host = ''
+            article = JSON.parse(JSON.stringify(article))
             if (process.env.NODE_ENV === 'development') {
-              let lastIndex = process.env.BASE_API.lastIndexOf(':')
-              host = process.env.BASE_API.substring(0, lastIndex)
+              let host = process.env.BASE_API
+              article.img = article.img ? `${process.env.BASE_API}${article.img}` : null
+              article.content = article.content.replace(/src="\/file\/uploads\/images\/blog/g, `src="${host}/file/uploads/images/blog`)
             }
-            this.article = JSON.parse(JSON.stringify(article))
-            this.article.content = article.content.replace(/src="\/file\/uploads\/images\/blog/g, `src="${host}/file/uploads/images/blog`)
+            this.article = article
             return
           }
           this.$message({

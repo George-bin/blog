@@ -33,7 +33,7 @@ export default {
 
 <style lang="scss">
 .home-component {
-  margin-top: 70px;
+  margin-top: 10px;
   margin-bottom: 20px;
   .home-box {
     display: flex;

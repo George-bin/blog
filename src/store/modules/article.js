@@ -22,7 +22,13 @@ const article = {
       state.paging = { ...data }
     },
     SET_ARTICLE_LIST (state, data) {
-      state.articleList = JSON.parse(JSON.stringify(data))
+      data = JSON.parse(JSON.stringify(data))
+      if (process.env.NODE_ENV === 'development') {
+        data.forEach(item => {
+          item.img = item.img ? `${process.env.BASE_API}${item.img}` : null
+        })
+      }
+      state.articleList = data
     },
     SET_ACTIVE_CLASSIFY (state, data) {
       state.activeClassify = JSON.parse(JSON.stringify(data))
