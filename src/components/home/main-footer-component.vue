@@ -26,14 +26,15 @@ export default {
 <style lang="scss">
 .main-footer-component {
   margin-top: 20px;
+  border-top: 4px solid rgba(183, 203, 232, 0.4);
   background: rgba(183, 203, 232, 0.3);
   .main-footer-box {
-    padding: 20px 0;
+    padding: 30px 0;
     font-size: 10px;
     text-align: center;
     color: #0a419b;
     p + p {
-      margin-top: 5px;
+      margin-top: 2px;
     }
   }
 }

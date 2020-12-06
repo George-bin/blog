@@ -15,7 +15,7 @@
           :key="index"
           class="article-classify-list__item">
           <span class="article-classify-list__item-name" @click="handleClickGetArticleByNotebookId(item)">{{item.name}}</span>
-          <span class="article-classify-list__item-count">({{item.count}})</span>
+          <span class="article-classify-list__item-count">({{item.total}})</span>
         </li>
       </ul>
     </div>
@@ -56,15 +56,15 @@ export default {
     ]),
     init () {
       this.GetClassifyList()
-        .then(data => {
-          let { errcode, message, list } = data
-          if (errcode === 0) {
-            this.articleClassify = JSON.parse(JSON.stringify(list))
+        .then(res => {
+          let { code, msg, data } = res
+          if (code === null) {
+            this.articleClassify = JSON.parse(JSON.stringify(data))
             return
           }
           this.$message({
             type: 'warning',
-            message
+            message: msg
           })
         })
         .catch(err => {
@@ -79,22 +79,22 @@ export default {
     handleClickGetArticleByNotebookId (item) {
       this.SET_ACTIVE_CLASSIFY(item)
       this.GetArticleByNotebookId({
-        id: item._id,
+        id: item.id,
         params: {
-          page: 1,
-          count: 10
+          pageNum: 1,
+          pageSize: 10
         }
       })
         .then(res => {
-          let { errcode, message } = res
-          if (errcode === 0) {
+          let { code, msg } = res
+          if (code === null) {
             this.$backtopAni()
             this.$router.push('/')
             return
           }
           this.$message({
             type: 'warning',
-            message
+            message: msg
           })
         })
         .catch(err => {
@@ -127,16 +127,18 @@ export default {
   .article-classify {
     width: 218px;
     padding: 20px;
-    border: 1px solid #eee;
     font-size: 14px;
     background: #fff;
-    border-radius: 4px;
     .article-classify__title {
       font-size: 14px;
     }
     .article-classify-list {
       margin-top: 10px;
       .article-classify-list__item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 20px;
         color: #0a419b;
         .article-classify-list__item-name {
           &:hover {
@@ -155,7 +157,7 @@ export default {
     }
   }
 }
-@media screen and (max-width: 650px) {
+@media screen and (max-width: 1200px) {
   .aside-nav-component {
     position: fixed;
     left: 0;
@@ -167,11 +169,8 @@ export default {
     z-index: 9998;
     .article-classify  {
       height: 100vh;
-      // padding-top: 70px;
       border: none;
       border-radius: 0;
-      background: #f9f9f9;
-      box-shadow: 0 5px 10px #dfdfdf;
     }
   }
   .show-mobile-aside-nav {

@@ -5,7 +5,7 @@
     <div class="main-header-box min-width">
       <div class="logo" @click="handleGoIndex">
         <img src="../../../static/img/logo.png" alt="logo" />
-        <h1><span class="name">George</span><span class="label">专注前端开发</span></h1>
+        <h1><span class="name">George</span><span class="label">技术分享</span></h1>
       </div>
       <!-- 移动端菜单icon -->
       <span @click.stop="handleClickOpenMobileAsideNav" class="mobile-aside-nav-icon">
@@ -76,15 +76,12 @@ export default {
 
 <style lang="scss">
 .main-header-component {
-  position: fixed;
-  top: 0;
-  left: 0;
   width: 100%;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+  border-bottom: 4px solid #eee;
+  // box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
   background: #fff;
-  z-index: 999;
   .main-header-box {
-    height: 60px;
+    height: 70px;
     display: flex;
     align-items: center;
     .logo {
@@ -130,13 +127,6 @@ export default {
   }
 }
 @media screen and (max-width: 1200px) {
-  .main-header-component {
-    .main-header-box {
-      margin: 0 10px;
-    }
-  }
-}
-@media screen and (max-width: 650px) {
   .main-header-component {
     .main-header-box {
       display: block;

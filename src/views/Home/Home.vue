@@ -37,6 +37,20 @@ export default {
     display: flex;
     .home-container {
       flex: 1;
+      padding: 20px 30px;
+      background: #fff;
+    }
+  }
+}
+@media screen and (max-width: 650px) {
+  .home-component {
+    .home-box {
+      display: block;
+      margin: 0;
+      .home-container {
+        padding: 0;
+        background: none;
+      }
     }
   }
 }

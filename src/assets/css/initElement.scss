@@ -1,0 +1,8 @@
+/* 分页组件 */
+.el-pagination.is-background {
+  .btn-next, .btn-prev, .el-pager li {
+    border: 1px solid #0a419b;
+    border-radius: 0;
+    background: none;
+  }
+}

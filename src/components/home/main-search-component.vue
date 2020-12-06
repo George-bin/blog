@@ -40,17 +40,17 @@ export default {
       this.SET_KEYWORD(this.keyword)
       this.GetArticleByKeyword({
         keyword: this.keyword,
-        page: 1,
-        count: 10
+        pageNum: 1,
+        pageSize: 10
       })
         .then(res => {
-          let { errcode, message } = res
-          if (errcode === 0) {
+          let { code, msg } = res
+          if (code === null) {
             return
           }
           this.$message({
             type: 'warning',
-            message
+            messag: msg
           })
         })
         .catch(err => {
@@ -77,7 +77,7 @@ export default {
     }
   }
 }
-@media screen and (max-width: 650px) {
+@media screen and (max-width: 1200px) {
   .main-search-component {
     .el-input {
       display: none;

@@ -5,8 +5,8 @@ import router from '../router'
 // 创建axios实例
 const service = axios.create({
   // api的base_url
-  // baseURL: `${process.env.BASE_API}/api/interface`,
-  baseURL: `${process.env.BASE_API}:${process.env.BASE_POINT}`,
+  // baseURL: `${process.env.BASE_API}`,
+  baseURL: `${process.env.BASE_API}:${process.env.BASE_PORT}`,
   // 请求超时时间
   timeout: 60000,
   // 允许携带cookie

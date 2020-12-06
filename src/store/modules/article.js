@@ -9,9 +9,9 @@ import {
 const article = {
   state: {
     paging: {
-      page: 1,
-      count: 10,
-      totals: 0
+      pageNum: 1,
+      pageSize: 10,
+      total: 0
     },
     articleList: [],
     activeClassify: null,
@@ -42,8 +42,8 @@ const article = {
     GetClassifyList ({ dispatch, commit }) {
       return new Promise((resolve, reject) => {
         getClassifyListRequest()
-          .then(res => {
-            resolve(res.data)
+          .then(response => {
+            resolve(response.data)
           })
           .catch(err => {
             reject(err)
@@ -54,18 +54,18 @@ const article = {
     GetArticleByNotebookId ({ commit }, data) {
       return new Promise((resolve, reject) => {
         getArticleByNotebookIdReuqest(data)
-          .then(res => {
-            let { errcode, data } = res.data
-            if (errcode === 0) {
-              let { page, count, totals, list } = data
+          .then(response => {
+            let { code, data } = response.data
+            if (code === null) {
+              let { pageNum, pageSize, total, list } = data
               commit('SET_ARTICLE_LIST', list)
               commit('SET_PAGING', {
-                page,
-                count,
-                totals
+                pageNum,
+                pageSize,
+                total
               })
             }
-            resolve(res.data)
+            resolve(response.data)
           })
           .catch(err => {
             reject(err)
@@ -76,18 +76,18 @@ const article = {
     GetArticleList ({ commit }, data) {
       return new Promise((resolve, reject) => {
         getArticleListRequest(data)
-          .then(res => {
-            let { errcode, data } = res.data
-            if (errcode === 0) {
-              let { page, count, totals, list } = data
+          .then(response => {
+            let { code, data } = response.data
+            if (code === null) {
+              let { pageNum, pageSize, total, list } = data
               commit('SET_ARTICLE_LIST', list)
               commit('SET_PAGING', {
-                page,
-                count,
-                totals
+                pageNum,
+                pageSize,
+                total
               })
             }
-            resolve(res.data)
+            resolve(response.data)
           })
           .catch(err => {
             reject(err)
@@ -110,18 +110,18 @@ const article = {
     GetArticleByKeyword ({ commit }, data) {
       return new Promise((resolve, reject) => {
         getArticleByKeywordRequest(data)
-          .then(res => {
-            let { errcode, data } = res.data
-            if (errcode === 0) {
-              let { page, count, totals, list } = data
+          .then(response => {
+            let { code, data } = response.data
+            if (code === null) {
+              let { pageNum, pageSize, total, list } = data
               commit('SET_ARTICLE_LIST', list)
               commit('SET_PAGING', {
-                page,
-                count,
-                totals
+                pageNum,
+                pageSize,
+                total
               })
             }
-            resolve(res.data)
+            resolve(response.data)
           })
           .catch(err => {
             reject(err)

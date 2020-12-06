@@ -23,6 +23,8 @@ import '../static/theme/index.css'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/googlecode.css' // 样式文件
 
+import './utils/filterExtend'
+
 // 引入moment
 import moment from 'moment'
 Vue.prototype.$moment = moment // 赋值使用

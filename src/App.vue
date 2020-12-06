@@ -3,7 +3,6 @@
     <!-- 返回顶部 -->
     <back-top ref="hi"></back-top>
     <main-header></main-header>
-    <div class="main-aphorism min-width">君子藏器于身，待时而动!</div>
     <div class="main-container">
       <router-view/>
     </div>
@@ -13,6 +12,7 @@
 </template>
 
 <script>
+import {mapMutations} from 'vuex'
 export default {
   name: 'App',
   components: {
@@ -38,18 +38,39 @@ export default {
       sessionStorage.setItem('store', JSON.stringify(this.$store.state))
     })
   },
-  mounted () {},
+  mounted () {
+    this.handleIsPC()
+  },
   methods: {
+    ...mapMutations([
+      'SET_IS_PC'
+    ]),
     /**
      * MBg组件加载完成
      */
     $_handleMBgMounted () {
+    },
+    /**
+     * 判断PC和移动端环境
+     */
+    handleIsPC () {
+      let userAgentInfo = navigator.userAgent
+      let Agents = ['Android', 'iPhone', 'SymbianOS', 'Windows Phone', 'iPad', 'iPod']
+      let flag = true
+      for (let v = 0; v < Agents.length; v++) {
+        if (userAgentInfo.indexOf(Agents[v]) > 0) {
+          flag = false
+          break
+        }
+      }
+      this.SET_IS_PC(flag)
     }
   }
 }
 </script>
 
 <style lang="scss">
+@import "assets/css/initElement";
 * {
   font-family: "Microsoft YaHei", "Arial", "黑体", "宋体", sans-serif;
 }
@@ -57,29 +78,16 @@ body, html {
   background: #f7f7f7;
 }
 #app {
-  .main-aphorism {
-    height: 36px;
-    line-height: 36px;
-    border: 1px solid rgba(10, 65, 155, 0.15);
-    margin-top: 70px;
-    text-align: center;
-    color: rgba(10, 65, 155, 1);
-    background: rgba(10, 65, 155, 0.1);
-    border-radius: 4px;
-  }
   .main-container {
-    min-height: calc(100vh - 209px);
+    min-height: calc(100vh - 74px - 10px - 120px);
     margin-top: 10px;
   }
 }
 @media screen and (max-width: 650px) {
   #app {
-    .main-aphorism {
-      display: none;
-    }
+    background: #fff;
     .main-container {
-      margin-top: 60px;
-      min-height: calc(100vh - 151px);
+      min-height: calc(100vh - 54px - 10px - 120px);
     }
   }
 }

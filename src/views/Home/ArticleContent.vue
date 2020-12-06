@@ -16,15 +16,15 @@
     <!-- 文章内容 -->
     <h2 class="article-title">{{article.title}}</h2>
     <p class="article-des">
-      <span class="time">这篇文章发布于 {{$moment(article.createTime).format('YYYY年MM月DD日 HH:mm')}}，</span>
-      归类于<span class="classify" @click="handleClickGoClassify">{{article.notebook ? article.notebook.name : ''}}</span>。
-      <span class="time">最后更新时间 {{$moment(article.updateTime).format('YYYY年MM月DD日 HH:mm')}} </span>
+      <span class="time">这篇文章发布于 {{article.createTime | dateFormat}}，</span>
+      归类于<span class="classify" @click="handleClickGoClassify">{{article.notebookName}}</span>。
+      <span class="time">最后更新时间 {{article.updateTime | dateFormat}} </span>
       <span class="traffic">阅读0次，今日0次</span>
     </p>
-    <div class="article-cover">
+    <!-- <div class="article-cover">
       <img v-if="article.img" :src="article.img" alt="cover" />
       <img v-else src="../../assets/img/normal-cover.jpeg" alt="normal-cover">
-    </div>
+    </div> -->
     <!-- v-highlight -->
     <div class="article-content" v-html="article.content"></div>
   </div>
@@ -38,7 +38,8 @@ export default {
   components: {},
   data () {
     return {
-      article: {}
+      article: {},
+      classify: {}
     }
   },
   computed: {
@@ -66,20 +67,20 @@ export default {
       let { id } = this.$route.params
       this.GetArticleById(id)
         .then(res => {
-          let { errcode, message, article } = res
-          if (errcode === 0) {
-            article = JSON.parse(JSON.stringify(article))
+          let { code, msg, data } = res
+          if (code === null) {
+            data = JSON.parse(JSON.stringify(data))
             if (process.env.NODE_ENV === 'development') {
-              let host = process.env.BASE_API
-              article.img = article.img ? `${process.env.BASE_API}${article.img}` : null
-              article.content = article.content.replace(/src="\/file\/uploads\/images\/blog/g, `src="${host}/file/uploads/images/blog`)
+              let ip = process.env.BASE_API
+              data.cover = data.cover ? `${process.env.BASE_API}${data.cover}` : null
+              data.content = data.content.replace(/src="\/file\/blog/g, `src="${ip}/file/blog`)
             }
-            this.article = article
+            this.article = data
             return
           }
           this.$message({
             type: 'warning',
-            message
+            message: msg
           })
         })
         .catch(err => {
@@ -95,25 +96,28 @@ export default {
       this.SET_KEYWORD('')
     },
     handleClickGoClassify () {
-      if (!this.article.notebook) return
+      // if (!this.article.notebook) return
       this.GetArticleByNotebookId({
-        id: this.article.notebook._id,
+        id: this.article.notebookId,
         params: {
-          page: 1,
-          count: 10
+          pageNum: 1,
+          pageSize: 10
         }
       })
         .then(res => {
-          let { errcode, message } = res
-          if (errcode === 0) {
-            this.SET_ACTIVE_CLASSIFY(this.article.notebook)
+          let { code, msg } = res
+          if (code === null) {
+            this.SET_ACTIVE_CLASSIFY({
+              id: this.article.notebookId,
+              name: this.article.notebookName
+            })
             this.$backtopAni()
             this.$router.push('/article')
             return
           }
           this.$message({
             type: 'warning',
-            message
+            message: msg
           })
         })
         .catch(err => {
@@ -130,20 +134,16 @@ export default {
 
 <style lang="scss">
 .article-content-component {
-  padding: 20px 30px;
-  border: 1px solid #eee;
-  background: #fff;
-  border-radius: 4px;
   .path-nav {
     padding: 10px;
-    background: rgba(0, 0, 0, 0.05);
-    border-radius: 4px;
+    // background: rgba(0, 0, 0, 0.05);
+    background: rgba(10, 65, 155, 0.1);
   }
   .article-title {
     margin-top: 20px;
-    font-size: 20px;
+    font-size: 36px;
     font-weight: bold;
-    // color: #0a419b;
+    color: #555;
   }
   .article-cover {
     img {
@@ -164,105 +164,117 @@ export default {
     }
   }
   .article-content {
-    margin-top: 18px;
-    word-break:break-all; // 英语换行问题
-    p {
-      margin-top: 8px;
-      line-height: 1.5;
+    margin-top: 12px;
+    line-height: 1.5;
+    word-break: break-all; // 英语换行问题
+    color: #555;
+    * {
+      line-height: 1.8;
+    }
+    p, h1, h2, h3, h4, h5, table, pre {
+      margin: 10px 0;
     }
     ol {
-      margin-top: 10px;
-      margin-left: 20px;
       li {
         line-height: 1.5;
         list-style-type: decimal;
       }
-      li + li {
-        margin-top: 6px;
-      }
     }
     ul {
-      margin-top: 10px;
-      margin-left: 3px;
-      li::before {
-        display: inline-block;
-        content: '';
-        width: 8px;
-        height: 8px;
-        margin-left: 0;
-        margin-right: 5px;
-        background: gray;
-        border-radius: 50%;
-      }
-      li + li {
-        margin-top: 6px;
+      li {
+        line-height: 1.5;
+        list-style: disc;
       }
     }
-  }
-  img {
-    display: block;
-    width: 400px;
-    margin-top: 5px;
-  }
-  h1 {
-    font-size: 24px;
-  }
-  h2 {
-    font-size: 22px;
-  }
-  h3 {
-    font-size: 20px;
+    ul, ol {
+      margin: 10px 0 10px 20px;
+    }
+    img {
+      display: block;
+      margin-top: 5px;
+    }
+    .eleImg {
+      cursor: pointer;
+      display: inline-block;
+      padding: 0 3px;
+    }
+    h1 { font-size: 32px; }
+    h2 { font-size: 24px }
+    h3 { font-size: 18px }
+    h4 { font-size: 16px }
+    h5 { font-size: 14px }
+    h6 { font-size: 12px }
+    pre {
+      display: block;
+      width: 500px;
+      // width: calc(100vw - 30px - 260px - 60px - 2px) !important;
+      padding: 0;
+      font-size: 13px;
+      line-height: 1.5;
+      color: #333;
+      word-break: break-all;
+      word-wrap: break-word;
+      background-color: #f7f7f7;
+      // border: 1px solid #ccc;
+      & > code {
+        display: block;
+        width: calc(100% - 20px);
+        // max-height: 400px;
+        padding: 10px;
+        margin: 0;
+        font-size: 14px;
+        color: inherit;
+        overflow: auto;
+      }
+    }
+    code {
+      padding: 3px 5px;
+      margin: 0 3px;
+      font-size: 80%;
+      color: #c7254e;
+      background: #f7f7f7;
+      border-radius: 4px;
+    }
+    blockquote {
+      display: block;
+      border-left: 6px solid #d0e5f2;
+      padding: 5px 10px;
+      margin: 10px 0;
+      line-height: 1.4;
+      font-size: 100%;
+      background-color: #f1f1f1;
+    }
   }
 }
 @media screen and (min-width: 1200px) {
   .article-content-component {
-    code {
-      width: calc(1180px - 270px - 60px - 22px);
-    }
-    h1, h2, h3, h4, h5, p {
-      width: calc(1180px - 270px - 60px);
-    }
-    li {
-      width: calc(1180px - 270px - 80px);
+    pre {
+      width: calc(1200px - 260px - 10px - 60px - 4px) !important;
     }
   }
 }
 @media screen and (max-width: 1200px) {
   .article-content-component {
-    code {
-      width: calc(100vw - 270px - 60px - 22px - 40px);
-    }
-    h1, h2, h3, h4, h5, p {
-      width: calc(100vw - 270px - 60px - 40px);
-    }
-    li {
-      width: calc(100vw - 270px - 60px - 60px);
+    pre {
+      width: calc(100vw - 20px - 60px) !important;
     }
   }
 }
 @media screen and (max-width: 650px) {
   .article-content-component {
-    padding: 10px;
+    padding: 0 10px;
     font-size: 14px;
     .article-title {
-      font-size: 16px;
+      font-size: 20px;
     }
-    h3 {
-      font-size: 18px;
+    .article-content {
+      h1,h2,h3,h4,h5 { font-size: 16px !important; }
+    }
+    pre {
+      width: calc(100vw - 20px) !important;
     }
     img {
       width: 100%;
-    }
-    code {
-      width: calc(100vw - 64px);
-      font-size: 12px;
-      line-height: 1.5;
-    }
-    h1, h2, h3, h4, h5, p {
-      width: calc(100vw - 42px);
-    }
-    li {
-      width: calc(100vw - 62px);
     }
   }
 }

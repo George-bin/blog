@@ -1,7 +1,7 @@
 <template>
   <div class="article-list-component">
     <header v-if="activeClassify || keyword" class="article-list__header">
-      <h2 v-if="activeClassify">"{{activeClassify.name}}"目录存档</h2>
+      <h2 v-if="activeClassify">”{{activeClassify.name}}”目录存档</h2>
       <h2 v-else>
         <span style="color: #ed1925">#</span>
         搜索：{{keyword}}
@@ -9,13 +9,13 @@
     </header>
     <!-- 分页组件 -->
     <el-pagination
+      :small="!isPC"
       background
       layout="total, prev, pager, next"
-      :current-page="paging.page"
-      :total="paging.totals"
-      :page-size="paging.size"
-      @current-change="onCurrentChange">
-    </el-pagination>
+      :current-page="paging.pageNum"
+      :total="paging.total"
+      :page-size="paging.pageSize"
+      @current-change="onCurrentChange"></el-pagination>
     <!-- 文章列表 -->
     <div class="article-list">
       <div
@@ -24,7 +24,7 @@
         class="article-list__item">
         <h4 class="article-list__item-title" @click="handleClickReadMore(item)">{{item.title}}</h4>
         <p class="article-list__item-des">
-          <span class="time">{{$moment(item.createTime).format('YYYY年MM月DD日 HH:mm')}}</span>
+          <span class="time">{{item.updateTime | dateFormat}}</span>
           <span class="traffic">阅读0次,今日0次</span>
         </p>
         <div class="article-list__item-intro">
@@ -33,18 +33,20 @@
             <p v-else>暂无简介信息!</p>
             <button class="read-more-btn" @click="handleClickReadMore(item)">阅读全文...</button>
           </div>
-          <img class="cover" :src="item.img ? item.img : require('../../assets/img/normal-cover.jpeg')" alt="cover" />
+          <img v-if="item.cover" class="cover" :src="item.cover | imgPath" alt="cover" />
+          <img v-else class="cover" src="../../assets/img/normal-cover.jpeg" />
         </div>
       </div>
     </div>
     <!-- 分页组件 -->
     <el-pagination
       class="footer-pagination"
+      :small="!isPC"
       background
       layout="total, prev, pager, next"
-      :current-page="paging.page"
-      :total="paging.totals"
-      :page-size="paging.size"
+      :current-page="paging.pageNum"
+      :total="paging.total"
+      :page-size="paging.pageSize"
       @current-change="onCurrentChange">
     </el-pagination>
   </div>
@@ -65,13 +67,19 @@ export default {
       paging: state => state.article.paging,
       activeClassify: state => state.article.activeClassify,
       articleList: state => state.article.articleList,
-      keyword: state => state.article.keyword
+      keyword: state => state.article.keyword,
+      isPC: state => state.home.isPC
     })
   },
-  watch: {},
+  watch: {
+    isPC: function (val, oldval) {
+      console.log(val)
+    }
+  },
   created () {},
   mounted () {
     this.init()
+    console.log(this.isPC)
   },
   methods: {
     ...mapMutations([
@@ -88,18 +96,18 @@ export default {
     },
     handleGetArticleList () {
       this.GetArticleList({
-        page: this.paging.page,
-        count: this.paging.count
+        pageNum: this.paging.pageNum,
+        pageSize: this.paging.pageSize
       })
         .then(res => {
-          let { errcode, message } = res
-          if (errcode === 0) {
+          let { code, msg } = res
+          if (code === null) {
             this.$backtopAni()
             return
           }
           this.$message({
             type: 'error',
-            message
+            message: msg
           })
         })
         .catch(err => {
@@ -110,19 +118,46 @@ export default {
           })
         })
     },
-    // 改变页数
-    onCurrentChange (page) {
-      this.SET_PAGING({
-        page,
-        count: this.paging.count,
-        totals: this.paging.totals
+    handleGetArticleByNotebookId () {
+      this.GetArticleByNotebookId({
+        id: this.activeClassify.id,
+        params: {
+          pageNum: this.paging.pageNum,
+          pageSize: this.paging.pageSize
+        }
       })
-      this.handleGetArticleList()
+        .then(res => {
+          let {code, msg} = res
+          if (code === null) {
+            this.$backtopAni()
+          } else {
+            this.$message({
+              type: 'warning',
+              message: msg
+            })
+          }
+        })
+        .catch(err => {
+          console.error('获取指定分类的文章失败：', err)
+        })
+    },
+    // 改变页数
+    onCurrentChange (pageNum) {
+      this.SET_PAGING({
+        pageNum,
+        pageSize: this.paging.pageSize,
+        total: this.paging.total
+      })
+      if (this.activeClassify) {
+        this.handleGetArticleByNotebookId()
+      } else {
+        this.handleGetArticleList()
+      }
     },
     // 阅读全文
     handleClickReadMore (item) {
       this.$backtop()
-      this.$router.push(`/article/${item._id}`)
+      this.$router.push(`/article/${item.id}`)
     }
   }
 }
@@ -130,10 +165,6 @@ export default {
 
 <style lang="scss">
 .article-list-component {
-  padding: 20px;
-  border: 1px solid #eee;
-  background: #fff;
-  border-radius: 4px;
   .article-list__header {
     h2 {
       padding-bottom: 20px;

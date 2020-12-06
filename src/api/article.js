@@ -3,14 +3,14 @@ import request from '../utils/request'
 // 获取所有分类
 export function getClassifyListRequest () {
   return request({
-    url: '/api/blog/classify'
+    url: '/api/blog/ui/notebook'
   })
 }
 
 // 获取指定分类文章
 export function getArticleByNotebookIdReuqest (data) {
   return request({
-    url: `/api/blog/classify/${data.id}`,
+    url: `/api/blog/ui/notebook/${data.id}`,
     params: data.params
   })
 }
@@ -18,7 +18,7 @@ export function getArticleByNotebookIdReuqest (data) {
 // 获取文章列表
 export function getArticleListRequest (data) {
   return request({
-    url: `/api/blog/article`,
+    url: `/api/blog/ui/note`,
     method: 'get',
     params: data
   })
@@ -27,14 +27,14 @@ export function getArticleListRequest (data) {
 // 获取文章内容 by id
 export function getArticleByIdRequest (id) {
   return request({
-    url: `/api/blog/article/${id}`
+    url: `/api/blog/manage/note/${id}`
   })
 }
 
 // 获取文章 by keyword
 export function getArticleByKeywordRequest (params) {
   return request({
-    url: '/api/blog/article/search',
+    url: '/api/blog/ui/note/query',
     method: 'get',
     params
   })
